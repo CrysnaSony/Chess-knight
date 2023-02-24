@@ -1,28 +1,20 @@
-function getKnightMoves(knightPosition: string) {
-    let knightX = knightPosition.charCodeAt(0)
-    let knightY = parseInt(knightPosition[1])
+import express from "express";
+import getKnightMoves from "./getKnightMoves";
 
-    //All possible moves of Knight
-    let X = [1, 1, -1, -1, 2, 2, -2, -2]
-    let Y = [2, -2, 2, -2, 1, -1, 1, -1]
+const app=express()
+const PORT =3001
+const router=express.Router()
 
-    let moves: string[] = []
-    for (let i = 0; i < 8; i++) {
+router.get("/api/:knightPosition",async (req,res)=>{
+    let knightPosition=req.params.knightPosition;
+    if(!knightPosition) return res.status(400).send("Parameter knightPosition required")
+    
+    let possibleMoves:string[]=getKnightMoves(knightPosition)
+    return res.send(possibleMoves)
 
-        let nextPosX = knightX + X[i]
-        let nextPosY = knightY + Y[i]
-        //if knight move is inside chess board
-        if (nextPosX >= 65 && nextPosX <= 72 && nextPosY >= 0 && nextPosY <= 8)
-            moves.push(String.fromCharCode(nextPosX) + nextPosY)
+})
 
-    }
-    console.log(moves);
-
-
-}
-
-// pass argument while running from CLI e.g. C4
-let argument = process.argv[2]
-getKnightMoves(argument)
-
-
+app.use(router)
+app.listen(PORT,()=>{
+    console.log("listening on port "+PORT)
+})
