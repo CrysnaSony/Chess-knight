@@ -1,5 +1,5 @@
 function getKnightMoves(knightPosition: string) {
-    if(!knightPosition) return []
+    if (!knightPosition) return []
     let knightX = knightPosition.charCodeAt(0)
     let knightY = parseInt(knightPosition[1])
 
@@ -17,7 +17,6 @@ function getKnightMoves(knightPosition: string) {
             moves.push(String.fromCharCode(nextPosX) + nextPosY)
 
     }
-    console.log(moves);
     return moves
 
 }
